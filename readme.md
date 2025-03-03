@@ -61,6 +61,9 @@ git push # or git push origin
 The script will automatically select the right token based on your user.email or user.name!
 
 Why Use This?
+
 🔹 __Simple__: No complex setup, just drop it in and it works.
+
 🔹 __Automatic__: Picks the right credentials for each repo.
+
 🔹 __Portable__: Works anywhere, no per-repo config needed.
