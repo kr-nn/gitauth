@@ -26,11 +26,39 @@ cd gitauth
 chmod +x gitauth
 mv gitauth ~/.local/bin/  # Or /usr/local/bin/
 ```
-2. Set it as your Git credential helper:
+
+### nix
+
+```bash
+nix shell github:kr-nn/gitauth
+```
+or
+```bash
+nix profile install github:kr-nn/gitauth
+```
+or
+```nix
+# flake.nix
+{
+  inputs.gitauth.url = "github:kr-nn/gitauth";
+  ...
+  outputs = let
+    gitauthPkg = gitauth.packages.${system}.gitauth
+    in { ... gitauthPkg, ... } : { ... specialArgs = { gitauthPkg }; }
+}
+
+...
+
+environment.systemPackages = [ gitauthPkg ];
+
+```
+# Configure
+
+1. Set it as your Git credential helper:
 ```bash
 git config --global credential.helper "!gitauth"
 ```
-3. Make sure your `~/.git-credentials` file contains your stored credentials:
+2. Make sure your `~/.git-credentials` file contains your stored credentials:
 
 ```
 https://user1:ghp_token1@github.com
@@ -41,7 +69,7 @@ https://user2@email.com:ghp_emailtoken2@github.com
 
 > !NOTE: do not use %40 in place of @, the script does this for you
 
-4. Set your `user.email` or `user.name` in each repo or globally:
+3. Set your `user.email` or `user.name` in each repo or globally:
 
 ```bash
 git config user.email "user1@email.com"
